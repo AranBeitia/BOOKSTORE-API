@@ -1,4 +1,4 @@
-const { Book } = require('../models/index')
+const { Book, Genre, GenreBook } = require('../models/index')
 
 const BookController = {
 	insert(req, res) {
@@ -12,7 +12,9 @@ const BookController = {
 	async getAll(req, res) {
 		try {
 			const books = await Book.findAll({
-				include: [{ model: Genre, through: { attributes: [] } }],
+				include: [
+					{ model: Genre, attributes: ['name'], through: { attributes: [] } },
+				],
 			})
 			res.send(books)
 		} catch (error) {
