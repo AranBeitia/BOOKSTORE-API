@@ -21,6 +21,18 @@ const BookController = {
 			console.error(error)
 		}
 	},
+	async getById(req, res) {
+		try {
+			const book = await Book.findByPk(req.params.id, {
+				include: [
+					{ model: Genre, attributes: ['id'], through: { attributes: [] } },
+				],
+			})
+			res.send(book)
+		} catch (error) {
+			console.error(error)
+		}
+	},
 	async delete(req, res) {
 		try {
 			await Book.destroy({
@@ -33,7 +45,7 @@ const BookController = {
 					BookId: req.params.id,
 				},
 			})
-			res.send({ message: 'The book has been removed' })
+			res.send({ message: 'The book has been removed', id: req.params.id })
 		} catch (error) {
 			console.log(error)
 		}
@@ -47,7 +59,7 @@ const BookController = {
 			})
 			const book = await Book.findByPk(req.params.id)
 			book.setGenres(req.body.GenreId)
-			res.send('Libro actualizado con éxito')
+			res.send(book)
 		} catch (error) {
 			console.error(error)
 			res

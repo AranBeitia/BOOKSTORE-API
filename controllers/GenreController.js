@@ -8,16 +8,14 @@ const GenreController = {
 			})
 			.catch((err) => console.error(err))
 	},
-	// async getAll(req, res) {
-	// 	try {
-	// 		const books = await Book.findAll({
-	// 			include: [{ model: Genre, through: { attributes: [] } }],
-	// 		})
-	// 		res.send(books)
-	// 	} catch (error) {
-	// 		console.error(error)
-	// 	}
-	// },
+	async getAll(req, res) {
+		try {
+			const genres = await Genre.findAll()
+			res.send(genres)
+		} catch (error) {
+			console.error(error)
+		}
+	},
 	// async delete(req, res) {
 	// 	try {
 	// 		await Book.destroy({
